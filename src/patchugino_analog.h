@@ -7,6 +7,8 @@
 * of the 4 provided channels either as input Voltage or Current
 */
 
+#pragma once
+
 #include "patchugo_core.h"
 #include "internal/patchugino_analog_types.h"
 #include <Wire.h>
