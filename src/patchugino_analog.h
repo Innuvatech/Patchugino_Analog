@@ -17,8 +17,35 @@ namespace PatchuginoAnalog {
 
     class Patchugino_Analog {
         private:
-            uint32_t usedI2CAddr; /*<! I2C Address used for communication. Selected from H10 pin header*/
-            Patchugo_Logger* logger = nullptr;
+            int usedI2CAddr; /*<! I2C Address used for communication. Selected from H10 pin header*/
+            Patchugo_Logger* logger = nullptr; /*<! Logger instance used for logging of this library*/
+            static constexpr uint32_t ADC_MAX_VAL = 32768; /*<! Max value of ADC that can be read */
+            static constexpr uint8_t CURRENT_RESISTANCE_DIV = 200; /*<! Value to use in division to get current */
+            static constexpr float VOLTAGE_MUL = 2.5f; /*<! Value to use in multiplication to get voltage*/
+            /**
+            * @brief Configures the ADS1115 to read continuous conversion on the selected channel
+            * 
+            * @param channel Channel to configure and read
+            * 
+            * @return: //TODO
+            */
+            PatchugoStatusCode ADS1115_Config_ForRead(AnalogChannel channel);
+
+            /**
+            * @brief Converts a raw ADC reading to voltage
+            * 
+            * @param adcRawVal Value of ADC to convert
+            * @return float Voltage value
+            */
+            float ADC_ToVoltage(uint16_t adcRawVal);
+
+            /**
+            * @brief Converts a raw ADC reading to current
+            * 
+            * @param adcRawVal Value of ADC to convert
+            * @return float Current value
+            */
+            float ADC_ToCurrent(uint16_t adcRawVal);
         public:
             /**
             * @brief Initializes the Patchugino_Analog board
@@ -31,6 +58,16 @@ namespace PatchuginoAnalog {
             * will not be visible!
             */
             void Init(PatchuginoAnalogI2CAddr i2cAddr, HardwareSerial& serial = Serial, PatchugoLogLevel logLevel = LOG_LEVEL_VERBOSE);
+
+            /**
+            * @brief Reads the given analog channel and converts to either Voltage or Current depending on
+            * the reading type
+            * 
+            * @param channel Channel to read
+            * @param readType Reading type(Either Voltage or Current reading)
+            * @return PatchugoStatusCode //TODO
+            */
+            PatchugoStatusCode Read(AnalogChannel channel, AnalogReadType readType, uint16_t* readAdc, float* readConv);
     };
 }
 
