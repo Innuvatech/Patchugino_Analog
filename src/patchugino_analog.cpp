@@ -37,7 +37,7 @@ float Patchugino_Analog::ADC_ToVoltage(uint16_t adcRawVal) {
 float Patchugino_Analog::ADC_ToCurrent(uint16_t adcRawVal) {
     float voltage = 0.0f;
     float current = 0.0f;
-    voltage = (adcRawVal / ADC_MAX_VAL) * 6.144;
+    voltage = ((float)adcRawVal / ADC_MAX_VAL) * 6.144;
     current = (voltage / CURRENT_RESISTANCE_DIV) * 1000;
     //logger->Log_Debug("Converted current: %.2f\n", current);
     return current;
