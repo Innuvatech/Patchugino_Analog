@@ -107,6 +107,9 @@ To read any of the inputs from the board a **Read** function is provided. The fu
     - readAdc: uint16_t pointer that will be filled with the raw ADC value that has been read
     - readConv: float pointer that will be filled with the Voltage read(if the selected type was a Voltage reading) or with the Current(if the selected type was a     current reading)
    
+  This function returns a **PatchugoStatusCode** enum value. Anything other than the code OK is to be considered as an error/failure. For more information about error codes please consult  
+  the [Patchugo_Core](https://github.com/Innuvatech/Patchugo_Core) repository
+   
     Reading examples are provided below:
   ```
   //Reads the ADC raw value and voltage of IN0
