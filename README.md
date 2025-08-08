@@ -115,10 +115,16 @@ To read any of the inputs from the board a **Read** function is provided. The fu
   //Reads the ADC raw value and voltage of IN0
   uint16_t rawAdcVal = 0;
   float voltageVal = 0.0f;
-  patchuginoAnalog.Read(ANALOG_CHANNEL_0, ANALOG_VOLTAGE_READING, &rawAdcVal, &voltageVal);
+  if(patchuginoAnalog.Read(ANALOG_CHANNEL_0, ANALOG_VOLTAGE_READING, &rawAdcVal, &voltageVal) != OK) {
+    Serial.println("ERROR READ);
+    //Manage your error here
+  }
 
   //Reads the ADC raw value and current of IN2
   uint16_t rawAdcVal2 = 0;
   float currentVal = 0.0f;
-  patchuginoAnalog.Read(ANALOG_CHANNEL_2, ANALOG_CURRENT_READING, &rawAdcVal2, &currentVal);
+  if(patchuginoAnalog.Read(ANALOG_CHANNEL_2, ANALOG_CURRENT_READING, &rawAdcVal2, &currentVal) != OK) {
+    Serial.println("ERROR READ);
+    //Manage your error here
+  }
  ```
